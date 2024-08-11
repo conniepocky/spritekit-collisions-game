@@ -22,6 +22,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.physicsBody?.affectedByGravity = true
         player.physicsBody?.isDynamic = true
         player.physicsBody?.mass = 1
+        player.name = "player"
         player.position = .init(x:0, y:500)
         addChild(player)
         
@@ -62,13 +63,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func collisionBetween(marble: SKNode, object: SKNode) {
-        print("boing")
+        if object.name == "ground" {
+            if marble.position.x >= 0 {
+                marble.physicsBody?.applyImpulse(CGVector(dx: -750, dy: 0))
+            } else {
+                marble.physicsBody?.applyImpulse(CGVector(dx: 750, dy: 0))
+            }
+        } else if object.name == "player" {
+            marble.removeFromParent()
+        }
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
-        if contact.bodyA.node?.name == "marble" && contact.bodyB.node?.name == "ground" {
+        if contact.bodyA.node?.name == "marble" {
             collisionBetween(marble: contact.bodyA.node!, object: contact.bodyB.node!)
-        } else if contact.bodyA.node?.name == "ground" && contact.bodyB.node?.name == "marble" {
+        } else if contact.bodyB.node?.name == "marble" {
             collisionBetween(marble: contact.bodyB.node!, object: contact.bodyA.node!)
         }
     }
