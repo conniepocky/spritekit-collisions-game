@@ -38,6 +38,10 @@ class GameViewController: UIViewController {
             return .all
         }
     }
+    
+    func navigationControllerSupportedInterfaceOrientations(_ navigationController: UINavigationController) -> UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.landscape
+    }
 
     override var prefersStatusBarHidden: Bool {
         return true

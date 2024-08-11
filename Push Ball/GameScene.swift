@@ -13,9 +13,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let player = SKShapeNode(circleOfRadius: 20)
     let ground = SKShapeNode(rectOf: CGSize(width: 5000, height: 30))
     
+    func createPlatforms() {
+        let startingPlatform = SKShapeNode(rectOf: CGSize(width: 100, height: 30))
+        
+        startingPlatform.fillColor = .green
+        startingPlatform.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 100, height: 30))
+        startingPlatform.physicsBody?.affectedByGravity = false
+        startingPlatform.physicsBody?.isDynamic = false
+        startingPlatform.name = "ground"
+        startingPlatform.position = .init(x: Int.random(in: 100...500), y: 200)
+        
+        print(startingPlatform.position.x)
+        addChild(startingPlatform)
+        
+        player.position.x = startingPlatform.position.x
+        player.position.y = startingPlatform.position.y + 50
+        
+    }
+    
     override func didMove(to view: SKView) {
         
         physicsWorld.contactDelegate = self
+        
+        createPlatforms()
         
         player.fillColor = .red
         player.physicsBody = SKPhysicsBody(circleOfRadius: 20)
@@ -23,17 +43,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.physicsBody?.isDynamic = true
         player.physicsBody?.mass = 1
         player.name = "player"
-        player.position = .init(x:0, y:500)
         addChild(player)
-        
-        ground.fillColor = .green
-        ground.strokeColor = .brown
-        ground.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 5000, height: 30))
-        ground.physicsBody?.affectedByGravity = false
-        ground.physicsBody?.isDynamic = false
-        ground.name = "ground"
-        ground.position = .init(x:0, y:-frame.height/4)
-        addChild(ground)
     }
     
     
