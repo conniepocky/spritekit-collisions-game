@@ -14,6 +14,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let ground = SKShapeNode(rectOf: CGSize(width: 5000, height: 30))
     
     func createPlatforms() {
+        
+        scene!.scaleMode = .aspectFit
+        
         let startingPlatform = SKShapeNode(rectOf: CGSize(width: 100, height: 30))
         
         startingPlatform.fillColor = .green
@@ -21,13 +24,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         startingPlatform.physicsBody?.affectedByGravity = false
         startingPlatform.physicsBody?.isDynamic = false
         startingPlatform.name = "ground"
-        startingPlatform.position = .init(x: Int.random(in: 100...500), y: 200)
+        startingPlatform.position = .init(x: Int.random(in: -600 ... -300), y: 200)
         
         print(startingPlatform.position.x)
         addChild(startingPlatform)
         
         player.position.x = startingPlatform.position.x
         player.position.y = startingPlatform.position.y + 50
+        
+        for _ in 1...5 {
+            let platform = SKShapeNode(rectOf: CGSize(width: Int.random(in: 100...200), height: 30))
+            
+            platform.fillColor = .green
+            platform.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 100, height: 30))
+            platform.physicsBody?.affectedByGravity = false
+            platform.physicsBody?.isDynamic = false
+            platform.name = "ground"
+            platform.position = .init(x: Int.random(in: -600 ... 700), y: Int.random(in: -300...200))
+            
+            addChild(platform)
+        }
         
     }
     
