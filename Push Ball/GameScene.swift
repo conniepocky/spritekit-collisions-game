@@ -54,7 +54,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         scene!.scaleMode = .aspectFit
         
-        startingPlatform.fillColor = .green
+        startingPlatform.fillColor = .systemMint
         startingPlatform.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 100, height: 30))
         startingPlatform.physicsBody?.affectedByGravity = false
         startingPlatform.physicsBody?.isDynamic = false
@@ -156,6 +156,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             print("next level")
         } else if object.name == "border" {
             print("hit border restart")
+            
+            let action = SKAction.move(to: CGPoint(x: startingPlatform.position.x, y: startingPlatform.position.y+50), duration: 0.1)
+            playerNode.physicsBody?.isDynamic = false
+            playerNode.run(action)
+            playerNode.physicsBody?.isDynamic = true
+            playerNode.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
         }
     }
     
