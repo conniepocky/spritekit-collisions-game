@@ -18,6 +18,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var leftBorder = SKShapeNode()
     var rightBorder = SKShapeNode()
     
+    let startingPlatform = SKShapeNode(rectOf: CGSize(width: 100, height: 30))
+    
     func createBorders() {
         bottomBorder.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: frame.width, height: 1))
         bottomBorder.physicsBody?.affectedByGravity = false
@@ -51,8 +53,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func createPlatforms() {
         
         scene!.scaleMode = .aspectFit
-        
-        let startingPlatform = SKShapeNode(rectOf: CGSize(width: 100, height: 30))
         
         startingPlatform.fillColor = .green
         startingPlatform.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 100, height: 30))
@@ -151,7 +151,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    func finishLevel(player: SKNode, object: SKNode) {
+    func finishLevel(playerNode: SKNode, object: SKNode) {
         if object.name == "final" {
             print("next level")
         } else if object.name == "border" {
@@ -163,14 +163,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         guard let nodeA = contact.bodyA.node else { return }
         guard let nodeB = contact.bodyB.node else { return }
         
-        if contact.bodyA.node?.name == "marble" {
-            collisionBetween(marble: contact.bodyA.node!, object: contact.bodyB.node!)
-        } else if contact.bodyB.node?.name == "marble" {
-            collisionBetween(marble: contact.bodyB.node!, object: contact.bodyA.node!)
-        } else if contact.bodyA.node?.name == "player"{
-            finishLevel(player: contact.bodyA.node!, object: contact.bodyB.node!)
-        } else if contact.bodyB.node?.name == "player" {
-            finishLevel(player: contact.bodyB.node!, object: contact.bodyA.node!)
+        if nodeA.name == "marble" {
+            collisionBetween(marble: nodeA, object: nodeB)
+        } else if nodeB.name == "marble" {
+            collisionBetween(marble: nodeB, object: nodeA)
+        } else if nodeA.name == "player"{
+            finishLevel(playerNode: nodeA, object: nodeB)
+        } else if nodeB.name == "player" {
+            finishLevel(playerNode: nodeB, object: nodeA)
         }
         
     }
