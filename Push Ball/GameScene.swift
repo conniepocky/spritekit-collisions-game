@@ -10,7 +10,7 @@ import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
-    var level = 0
+    let level = Globals.level
     
     let player = SKShapeNode(circleOfRadius: 20)
     let ground = SKShapeNode(rectOf: CGSize(width: 5000, height: 30))
@@ -69,7 +69,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.position.x = startingPlatform.position.x
         player.position.y = startingPlatform.position.y + 50
         
-        for _ in 1...5 { // to do make platforms more widely spaced and add final platform to reset + win round
+        for _ in 0...4 { // to do make platforms more widely spaced and add final platform to reset + win round
             let width = Int.random(in: 150...250)
             let height = 30
             let platform = SKShapeNode(rectOf: CGSize(width: width, height: height))
@@ -161,9 +161,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func collisionBetween(marble: SKNode, object: SKNode) {
         if object.name == "ground" {
             if marble.position.x >= 0 {
-                marble.physicsBody?.applyImpulse(CGVector(dx: -750, dy: 0))
+                marble.physicsBody?.applyImpulse(CGVector(dx: -800, dy: 0))
             } else {
-                marble.physicsBody?.applyImpulse(CGVector(dx: 750, dy: 0))
+                marble.physicsBody?.applyImpulse(CGVector(dx: 800, dy: 0))
             }
         } else if object.name == "player" || object.name == "border" {
             marble.removeFromParent()
@@ -173,6 +173,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func finishLevel(playerNode: SKNode, object: SKNode) {
         if object.name == "final" {
             print("next level")
+            
+            Globals.level += 1
+            
+            resetLevel()
+            
         } else if object.name == "border" {
             print("hit border restart")
             
@@ -181,7 +186,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             playerNode.run(action)
             playerNode.physicsBody?.isDynamic = true
             playerNode.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-            
             
         }
     }

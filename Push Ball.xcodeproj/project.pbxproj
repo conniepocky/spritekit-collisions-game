@@ -15,6 +15,7 @@
 		BC5739F82C67A5540038E707 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = BC5739F72C67A5540038E707 /* Base */; };
 		BC5739FA2C67A5550038E707 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC5739F92C67A5550038E707 /* Assets.xcassets */; };
 		BC5739FD2C67A5550038E707 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = BC5739FC2C67A5550038E707 /* Base */; };
+		BC9E7B9D2C6B616300178CE2 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9E7B9C2C6B616300178CE2 /* Globals.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		BC5739F72C67A5540038E707 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BC5739F92C67A5550038E707 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BC5739FC2C67A5550038E707 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		BC9E7B9C2C6B616300178CE2 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 				BC5739F62C67A5540038E707 /* Main.storyboard */,
 				BC5739F92C67A5550038E707 /* Assets.xcassets */,
 				BC5739FB2C67A5550038E707 /* LaunchScreen.storyboard */,
+				BC9E7B9C2C6B616300178CE2 /* Globals.swift */,
 			);
 			path = "Push Ball";
 			sourceTree = "<group>";
@@ -144,6 +147,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC9E7B9D2C6B616300178CE2 /* Globals.swift in Sources */,
 				BC5739F32C67A5540038E707 /* GameScene.swift in Sources */,
 				BC5739F52C67A5540038E707 /* GameViewController.swift in Sources */,
 				BC5739ED2C67A5540038E707 /* AppDelegate.swift in Sources */,
