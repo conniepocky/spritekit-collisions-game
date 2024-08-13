@@ -10,6 +10,8 @@ import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    var level = 0
+    
     let player = SKShapeNode(circleOfRadius: 20)
     let ground = SKShapeNode(rectOf: CGSize(width: 5000, height: 30))
     
@@ -93,12 +95,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(finalPlatform)
     }
     
+    func resetLevel() {
+        self.removeAllChildren()
+        
+        createBorders()
+        createPlatforms()
+        
+        player.fillColor = .red
+        player.physicsBody = SKPhysicsBody(circleOfRadius: 20)
+        player.physicsBody?.affectedByGravity = true
+        player.physicsBody?.isDynamic = true
+        player.physicsBody?.mass = 1
+        player.name = "player"
+        
+        player.physicsBody!.contactTestBitMask = player.physicsBody!.collisionBitMask
+        
+        addChild(player)
+    }
+    
     override func didMove(to view: SKView) {
         
         physicsWorld.contactDelegate = self
         
         createPlatforms()
-        
         createBorders()
         
         player.fillColor = .red
@@ -162,6 +181,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             playerNode.run(action)
             playerNode.physicsBody?.isDynamic = true
             playerNode.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+            
+            
         }
     }
     
