@@ -22,6 +22,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let startingPlatform = SKShapeNode(rectOf: CGSize(width: 100, height: 30))
     
+    var scoreLabel: SKLabelNode!
+    
     func createBorders() {
         bottomBorder.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: frame.width, height: 1))
         bottomBorder.physicsBody?.affectedByGravity = false
@@ -54,8 +56,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func createPlatforms() {
         
-        scene!.scaleMode = .aspectFit
-        
         startingPlatform.fillColor = .systemMint
         startingPlatform.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 100, height: 30))
         startingPlatform.physicsBody?.affectedByGravity = false
@@ -69,8 +69,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.position.x = startingPlatform.position.x
         player.position.y = startingPlatform.position.y + 50
         
-        for _ in 0...4 { // to do make platforms more widely spaced and add final platform to reset + win round
-            let width = Int.random(in: 150...250)
+        for i in 0...4 { // to do make platforms more widely spaced and add final platform to reset + win round
+            let width = Int.random(in: 150...200)
             let height = 30
             let platform = SKShapeNode(rectOf: CGSize(width: width, height: height))
             
@@ -79,7 +79,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             platform.physicsBody?.affectedByGravity = false
             platform.physicsBody?.isDynamic = false
             platform.name = "ground"
-            platform.position = .init(x: Int.random(in: -600 ... 650), y: Int.random(in: -200...200))
+            if !Globals.levelPlatformPositions[level].isEmpty && (i < Globals.levelPlatformPositions[level].count) {
+                let currentLevel = Globals.levelPlatformPositions[level]
+                platform.position = .init(x: currentLevel[i][0], y: currentLevel[i][1])
+            } else {
+                platform.position = .init(x: Int.random(in: -600 ... 650), y: Int.random(in: -200...200))
+            }
             
             addChild(platform)
         }
@@ -96,7 +101,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func resetLevel() {
-        self.removeAllChildren()
+        
+        for child in self.children {
+            if child.name != "score" {
+                child.removeFromParent()
+            }
+        }
         
         createBorders()
         createPlatforms()
@@ -115,7 +125,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMove(to view: SKView) {
         
+        scene!.scaleMode = .aspectFit
         physicsWorld.contactDelegate = self
+        
+        scoreLabel = SKLabelNode(fontNamed: "Annai MN")
+        scoreLabel.fontSize = 50
+        scoreLabel.text = "0"
+        scoreLabel.name = "score"
+        scoreLabel.horizontalAlignmentMode = .left
+        scoreLabel.position = CGPoint(x:-650, y:450)
+        addChild(scoreLabel)
         
         createPlatforms()
         createBorders()
@@ -170,11 +189,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    func levelUp() {
+        Globals.level += 1
+        scoreLabel.text = "\(Globals.level)"
+    }
+    
     func finishLevel(playerNode: SKNode, object: SKNode) {
         if object.name == "final" {
-            print("next level")
-            
-            Globals.level += 1
+            levelUp()
             
             resetLevel()
             
