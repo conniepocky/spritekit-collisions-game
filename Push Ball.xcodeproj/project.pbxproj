@@ -16,6 +16,8 @@
 		BC5739FA2C67A5550038E707 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC5739F92C67A5550038E707 /* Assets.xcassets */; };
 		BC5739FD2C67A5550038E707 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = BC5739FC2C67A5550038E707 /* Base */; };
 		BC9E7B9D2C6B616300178CE2 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9E7B9C2C6B616300178CE2 /* Globals.swift */; };
+		BC9E7BA12C6CC75400178CE2 /* StartScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9E7BA02C6CC75400178CE2 /* StartScene.swift */; };
+		BC9E7BA32C6CC7BF00178CE2 /* StartScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = BC9E7BA22C6CC7BF00178CE2 /* StartScene.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +31,8 @@
 		BC5739F92C67A5550038E707 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BC5739FC2C67A5550038E707 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BC9E7B9C2C6B616300178CE2 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
+		BC9E7BA02C6CC75400178CE2 /* StartScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScene.swift; sourceTree = "<group>"; };
+		BC9E7BA22C6CC7BF00178CE2 /* StartScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StartScene.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +65,7 @@
 		BC5739EB2C67A5540038E707 /* Push Ball */ = {
 			isa = PBXGroup;
 			children = (
+				BC9E7BA22C6CC7BF00178CE2 /* StartScene.sks */,
 				BC5739EC2C67A5540038E707 /* AppDelegate.swift */,
 				BC5739EE2C67A5540038E707 /* GameScene.sks */,
 				BC5739F02C67A5540038E707 /* Actions.sks */,
@@ -70,6 +75,7 @@
 				BC5739F92C67A5550038E707 /* Assets.xcassets */,
 				BC5739FB2C67A5550038E707 /* LaunchScreen.storyboard */,
 				BC9E7B9C2C6B616300178CE2 /* Globals.swift */,
+				BC9E7BA02C6CC75400178CE2 /* StartScene.swift */,
 			);
 			path = "Push Ball";
 			sourceTree = "<group>";
@@ -135,6 +141,7 @@
 				BC5739EF2C67A5540038E707 /* GameScene.sks in Resources */,
 				BC5739F82C67A5540038E707 /* Base in Resources */,
 				BC5739FA2C67A5550038E707 /* Assets.xcassets in Resources */,
+				BC9E7BA32C6CC7BF00178CE2 /* StartScene.sks in Resources */,
 				BC5739F12C67A5540038E707 /* Actions.sks in Resources */,
 				BC5739FD2C67A5550038E707 /* Base in Resources */,
 			);
@@ -150,6 +157,7 @@
 				BC9E7B9D2C6B616300178CE2 /* Globals.swift in Sources */,
 				BC5739F32C67A5540038E707 /* GameScene.swift in Sources */,
 				BC5739F52C67A5540038E707 /* GameViewController.swift in Sources */,
+				BC9E7BA12C6CC75400178CE2 /* StartScene.swift in Sources */,
 				BC5739ED2C67A5540038E707 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
