@@ -63,13 +63,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         startingPlatform.name = "ground"
         startingPlatform.position = .init(x: -600, y: 300)
         
-        print(startingPlatform.position.x)
         addChild(startingPlatform)
         
         player.position.x = startingPlatform.position.x
         player.position.y = startingPlatform.position.y + 50
         
-        for i in 0...4 { // to do make platforms more widely spaced and add final platform to reset + win round
+        for i in 0...4 {
             let width = Int.random(in: 150...200)
             let height = 30
             let platform = SKShapeNode(rectOf: CGSize(width: width, height: height))
@@ -152,12 +151,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-       
-    }
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//    }
+//    
+//    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+//       
+//    }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
@@ -179,11 +178,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func collisionBetween(marble: SKNode, object: SKNode) {
         if object.name == "ground" {
-            if marble.position.x >= 0 {
-                marble.physicsBody?.applyImpulse(CGVector(dx: -800, dy: 0))
-            } else {
-                marble.physicsBody?.applyImpulse(CGVector(dx: 800, dy: 0))
-            }
+            marble.physicsBody?.applyImpulse(CGVector(dx: 800, dy: 0))
         } else if object.name == "player" || object.name == "border" {
             marble.removeFromParent()
         }
