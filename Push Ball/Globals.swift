@@ -11,6 +11,11 @@ struct Globals {
     static var level = 0
     
     static var levelPlatformPositions = [
+    [[-450, 240],
+     [-250, 190],
+     [-50, 0],
+     [100, -150],
+     [250, -200]],
     [[-400, 240],
     [100, 200],
     [-150, 50],

@@ -21,6 +21,7 @@ class StartScene: SKScene {
         welcomeText.horizontalAlignmentMode = .center
         welcomeText.position = CGPoint(x:0, y:0)
         addChild(welcomeText)
+        
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

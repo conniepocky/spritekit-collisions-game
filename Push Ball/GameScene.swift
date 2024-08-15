@@ -10,8 +10,6 @@ import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
-    let level = Globals.level
-    
     let player = SKShapeNode(circleOfRadius: 20)
     let ground = SKShapeNode(rectOf: CGSize(width: 5000, height: 30))
     
@@ -68,6 +66,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.position.x = startingPlatform.position.x
         player.position.y = startingPlatform.position.y + 50
         
+        let level = Globals.level
+        
         for i in 0...4 {
             let width = Int.random(in: 150...200)
             let height = 30
@@ -78,6 +78,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             platform.physicsBody?.affectedByGravity = false
             platform.physicsBody?.isDynamic = false
             platform.name = "ground"
+            
             if !Globals.levelPlatformPositions[level].isEmpty && (i < Globals.levelPlatformPositions[level].count) {
                 let currentLevel = Globals.levelPlatformPositions[level]
                 platform.position = .init(x: currentLevel[i][0], y: currentLevel[i][1])
