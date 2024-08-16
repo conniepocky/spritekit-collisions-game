@@ -174,6 +174,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             marble.physicsBody!.contactTestBitMask = marble.physicsBody!.collisionBitMask
             
             self.addChild(marble)
+            
+            marble.physicsBody?.applyImpulse(CGVector(dx: 0, dy: -200))
         }
     }
     
