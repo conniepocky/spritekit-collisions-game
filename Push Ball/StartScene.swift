@@ -25,6 +25,7 @@ class StartScene: SKScene {
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
         let gameScene = SKScene(fileNamed: "GameScene")
         
         gameScene?.scaleMode = .aspectFill

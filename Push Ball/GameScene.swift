@@ -79,7 +79,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             platform.physicsBody?.isDynamic = false
             platform.name = "ground"
             
-            if !Globals.levelPlatformPositions[level].isEmpty && (i < Globals.levelPlatformPositions[level].count) {
+            if (Globals.level < Globals.levelPlatformPositions.count) && (i < Globals.levelPlatformPositions[level].count) {
                 let currentLevel = Globals.levelPlatformPositions[level]
                 platform.position = .init(x: currentLevel[i][0], y: currentLevel[i][1])
             } else {
