@@ -22,6 +22,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var scoreLabel: SKLabelNode!
     
+    func destroyNode(node: SKNode) {
+        let fadeOut = SKAction.fadeAlpha(to: 0.0, duration: 0.5)
+        
+        node.run(fadeOut){
+          node.removeFromParent()
+        }
+    }
+    
     func createBorders() {
         bottomBorder.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: frame.width, height: 1))
         bottomBorder.physicsBody?.affectedByGravity = false
@@ -183,7 +191,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if object.name == "ground" {
             marble.physicsBody?.applyImpulse(CGVector(dx: 800, dy: 0))
         } else if object.name == "player" || object.name == "border" {
-            marble.removeFromParent()
+            destroyNode(node: marble)
         }
     }
     
