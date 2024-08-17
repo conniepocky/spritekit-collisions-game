@@ -18,6 +18,8 @@
 		BC9E7B9D2C6B616300178CE2 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9E7B9C2C6B616300178CE2 /* Globals.swift */; };
 		BC9E7BA12C6CC75400178CE2 /* StartScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9E7BA02C6CC75400178CE2 /* StartScene.swift */; };
 		BC9E7BA32C6CC7BF00178CE2 /* StartScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = BC9E7BA22C6CC7BF00178CE2 /* StartScene.sks */; };
+		BC9E7BA92C710DE700178CE2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC9E7BA72C710DE700178CE2 /* Assets.xcassets */; };
+		BC9E7BAD2C711FDE00178CE2 /* MyParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = BC9E7BAC2C711FDE00178CE2 /* MyParticle.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +35,8 @@
 		BC9E7B9C2C6B616300178CE2 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		BC9E7BA02C6CC75400178CE2 /* StartScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScene.swift; sourceTree = "<group>"; };
 		BC9E7BA22C6CC7BF00178CE2 /* StartScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StartScene.sks; sourceTree = "<group>"; };
+		BC9E7BA72C710DE700178CE2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BC9E7BAC2C711FDE00178CE2 /* MyParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyParticle.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +53,7 @@
 		BC5739E02C67A5540038E707 = {
 			isa = PBXGroup;
 			children = (
+				BC9E7BA72C710DE700178CE2 /* Assets.xcassets */,
 				BC5739EB2C67A5540038E707 /* Push Ball */,
 				BC5739EA2C67A5540038E707 /* Products */,
 			);
@@ -76,6 +81,7 @@
 				BC5739FB2C67A5550038E707 /* LaunchScreen.storyboard */,
 				BC9E7B9C2C6B616300178CE2 /* Globals.swift */,
 				BC9E7BA02C6CC75400178CE2 /* StartScene.swift */,
+				BC9E7BAC2C711FDE00178CE2 /* MyParticle.sks */,
 			);
 			path = "Push Ball";
 			sourceTree = "<group>";
@@ -143,7 +149,9 @@
 				BC5739FA2C67A5550038E707 /* Assets.xcassets in Resources */,
 				BC9E7BA32C6CC7BF00178CE2 /* StartScene.sks in Resources */,
 				BC5739F12C67A5540038E707 /* Actions.sks in Resources */,
+				BC9E7BA92C710DE700178CE2 /* Assets.xcassets in Resources */,
 				BC5739FD2C67A5550038E707 /* Base in Resources */,
+				BC9E7BAD2C711FDE00178CE2 /* MyParticle.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

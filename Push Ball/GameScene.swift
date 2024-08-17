@@ -23,11 +23,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var scoreLabel: SKLabelNode!
     
     func destroyNode(node: SKNode) {
-        let fadeOut = SKAction.fadeAlpha(to: 0.0, duration: 0.5)
+        let explosionEmitterNode = SKEmitterNode(fileNamed:"MyParticle")!
+        explosionEmitterNode.position = node.position
         
-        node.run(fadeOut){
-          node.removeFromParent()
-        }
+        let explodeAction = SKAction.run({self.addChild(explosionEmitterNode)
+            node.removeFromParent()})
+        
+        let wait = SKAction.wait(forDuration: 0.1)
+        
+        let removeExplosion = SKAction.run({explosionEmitterNode.removeFromParent()})
+        
+        let sequence = SKAction.sequence([explodeAction, wait, removeExplosion])
+        
+        self.run(sequence)
     }
     
     func createBorders() {
