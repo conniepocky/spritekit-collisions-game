@@ -13,17 +13,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let player = SKShapeNode(circleOfRadius: 20)
     let ground = SKShapeNode(rectOf: CGSize(width: 5000, height: 30))
     
-    var bottomBorder = SKShapeNode()
-    var topBorder = SKShapeNode()
-    var leftBorder = SKShapeNode()
-    var rightBorder = SKShapeNode()
+    var bottomBorder = SKShapeNode(rectOf: CGSize(width: 5000, height: 30))
+    var topBorder = SKShapeNode(rectOf: CGSize(width: 5000, height: 30))
+    var leftBorder = SKShapeNode(rectOf: CGSize(width: 5000, height: 30))
+    var rightBorder = SKShapeNode(rectOf: CGSize(width: 5000, height: 30))
     
     let startingPlatform = SKShapeNode(rectOf: CGSize(width: 100, height: 30))
     
     var scoreLabel: SKLabelNode!
     
+    
+    
     func destroyNode(node: SKNode) {
-        let explosionEmitterNode = SKEmitterNode(fileNamed:"MyParticle")!
+        let explosionEmitterNode = SKEmitterNode(fileNamed:"Explosion")!
         explosionEmitterNode.position = node.position
         
         let explodeAction = SKAction.run({self.addChild(explosionEmitterNode)
@@ -38,36 +40,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.run(sequence)
     }
     
-    func createBorders() {
-        bottomBorder.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: frame.width, height: 1))
-        bottomBorder.physicsBody?.affectedByGravity = false
-        bottomBorder.physicsBody?.isDynamic = false
-        bottomBorder.position = .init(x: 0, y: -frame.height / 2)
-        bottomBorder.name = "border"
-        addChild(bottomBorder)
-        
-        topBorder.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: frame.width, height: 1))
-        topBorder.physicsBody?.affectedByGravity = false
-        topBorder.physicsBody?.isDynamic = false
-        topBorder.position = .init(x: 0, y: frame.height / 2)
-        topBorder.name = "border"
-        addChild(topBorder)
-        
-        leftBorder.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 1, height: frame.height))
-        leftBorder.physicsBody?.affectedByGravity = false
-        leftBorder.physicsBody?.isDynamic = false
-        leftBorder.position = .init(x: -frame.width / 2, y: 0)
-        leftBorder.name = "border"
-        addChild(leftBorder)
-        
-        rightBorder.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 1, height: frame.height))
-        rightBorder.physicsBody?.affectedByGravity = false
-        rightBorder.physicsBody?.isDynamic = false
-        rightBorder.position = .init(x: frame.width / 2, y: 0)
-        rightBorder.name = "border"
-        addChild(rightBorder)
-    }
-    
     func createPlatforms() {
         
         startingPlatform.fillColor = .systemMint
@@ -75,7 +47,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         startingPlatform.physicsBody?.affectedByGravity = false
         startingPlatform.physicsBody?.isDynamic = false
         startingPlatform.name = "ground"
-        startingPlatform.position = .init(x: -600, y: 300)
+        startingPlatform.position = .init(x: 75, y: 650)
         
         addChild(startingPlatform)
         
@@ -99,7 +71,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let currentLevel = Globals.levelPlatformPositions[level]
                 platform.position = .init(x: currentLevel[i][0], y: currentLevel[i][1])
             } else {
-                platform.position = .init(x: Int.random(in: -600 ... 650), y: Int.random(in: -200...200))
+                platform.position = .init(x: Int.random(in: 0 ... 1024), y: Int.random(in: 0...768))
             }
             
             addChild(platform)
@@ -111,7 +83,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         finalPlatform.physicsBody?.affectedByGravity = false
         finalPlatform.physicsBody?.isDynamic = false
         finalPlatform.name = "final"
-        finalPlatform.position = .init(x: 600, y: -400)
+        finalPlatform.position = .init(x: 912, y: 135)
         
         addChild(finalPlatform)
     }
@@ -124,7 +96,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
-        createBorders()
         createPlatforms()
         
         player.fillColor = .red
@@ -153,7 +124,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(scoreLabel)
         
         createPlatforms()
-        createBorders()
         
         player.fillColor = .red
         player.physicsBody = SKPhysicsBody(circleOfRadius: 20)
@@ -168,8 +138,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            print(touch.location(in: self).x, touch.location(in:self).y)
+        }
+    }
 //    
 //    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
 //       
@@ -198,8 +171,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func collisionBetween(marble: SKNode, object: SKNode) {
         if object.name == "ground" {
             marble.physicsBody?.applyImpulse(CGVector(dx: 800, dy: 0))
-        } else if object.name == "player" || object.name == "border" {
+        } else if object.name == "player" {
             destroyNode(node: marble)
+        } else if object.name == "border" || object.name == "final"{
+            marble.removeFromParent()
         }
     }
     
@@ -242,8 +217,50 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
+    func movePlayerToPlatform() {
+        let action = SKAction.move(to: CGPoint(x: startingPlatform.position.x, y: startingPlatform.position.y+50), duration: 0.1)
+        player.physicsBody?.isDynamic = false
+        player.run(action)
+        player.physicsBody?.isDynamic = true
+        player.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+    }
+    
+    func keepNodesInBounds() {
+        for child in self.children {
+            if child.position.y < 0 {
+                if child.name == "player" {
+                    movePlayerToPlatform()
+                } else {
+                    child.removeFromParent()
+                }
+            }
+            if child.position.x < 0 {
+                if child.name == "player" {
+                    movePlayerToPlatform()
+                } else {
+                    child.removeFromParent()
+                }
+            }
+            if child.position.x > 1024 {
+                if child.name == "player" {
+                    movePlayerToPlatform()
+                } else {
+                    child.removeFromParent()
+                }
+            }
+            if child.position.y > 768 {
+                if child.name == "player" {
+                    movePlayerToPlatform()
+                } else {
+                    child.removeFromParent()
+                }
+            }
+        }
+    }
+    
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+        keepNodesInBounds()
     }
 }

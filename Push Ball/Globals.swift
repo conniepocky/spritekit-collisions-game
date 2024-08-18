@@ -7,6 +7,13 @@
 
 import Foundation
 
+enum GameConfiguration {
+    enum Core {
+        static let gameWidth: CGFloat = 960
+        static let gameHeight: CGFloat = 540
+    }
+}
+
 struct Globals {
     static var level = 0
     

@@ -26,10 +26,10 @@ class StartScene: SKScene {
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        let gameScene = SKScene(fileNamed: "GameScene")
+        let gameScene = GameScene(size: CGSize(width: 1024, height: 768))
         
-        gameScene?.scaleMode = .aspectFill
+        gameScene.scaleMode = .aspectFill
         
-        self.view?.presentScene(gameScene!, transition: SKTransition.fade(withDuration: 0.5))
+        self.view?.presentScene(gameScene, transition: SKTransition.fade(withDuration: 0.5))
     }
 }
