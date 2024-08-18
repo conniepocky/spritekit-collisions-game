@@ -47,7 +47,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         startingPlatform.physicsBody?.affectedByGravity = false
         startingPlatform.physicsBody?.isDynamic = false
         startingPlatform.name = "ground"
-        startingPlatform.position = .init(x: 75, y: 650)
+        startingPlatform.position = .init(x: 75, y: 640)
         
         addChild(startingPlatform)
         
@@ -116,11 +116,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.contactDelegate = self
         
         scoreLabel = SKLabelNode(fontNamed: "Annai MN")
-        scoreLabel.fontSize = 50
+        scoreLabel.fontSize = 25
         scoreLabel.text = "0"
         scoreLabel.name = "score"
         scoreLabel.horizontalAlignmentMode = .left
-        scoreLabel.position = CGPoint(x:-650, y:450)
+        scoreLabel.position = CGPoint(x:20, y:740)
         addChild(scoreLabel)
         
         createPlatforms()
