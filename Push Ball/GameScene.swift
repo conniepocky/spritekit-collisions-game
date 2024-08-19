@@ -60,7 +60,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let level = Globals.level
         
         for i in 0...4 {
-            let width = Int.random(in: 150...200)
+            let width = 125
             let height = platformHeight
             let platform = SKShapeNode(rectOf: CGSize(width: width, height: height))
             
@@ -74,7 +74,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let currentLevel = Globals.levelPlatformPositions[level]
                 platform.position = .init(x: currentLevel[i][0], y: currentLevel[i][1])
             } else {
-                platform.position = .init(x: Int.random(in: 0 ... 1024), y: Int.random(in: 0...768))
+                if i == 0 {
+                    platform.position = .init(x: Int.random(in: 175 ... 310), y: Int.random(in: 85...(660-height)))
+                } else {
+                    platform.position = .init(x: Int.random(in: 125 ... (912-width)), y: Int.random(in: 85...(660-height)))
+                }
             }
             
             addChild(platform)
@@ -86,7 +90,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         finalPlatform.physicsBody?.affectedByGravity = false
         finalPlatform.physicsBody?.isDynamic = false
         finalPlatform.name = "final"
-        finalPlatform.position = .init(x: 912, y: 135)
+        finalPlatform.position = .init(x: 912, y: 85)
         
         addChild(finalPlatform)
     }
