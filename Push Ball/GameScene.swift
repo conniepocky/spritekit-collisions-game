@@ -10,19 +10,19 @@ import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    let rectangleHeight = 20
+    
     let player = SKShapeNode(circleOfRadius: 20)
-    let ground = SKShapeNode(rectOf: CGSize(width: 5000, height: 30))
     
     var bottomBorder = SKShapeNode(rectOf: CGSize(width: 5000, height: 30))
     var topBorder = SKShapeNode(rectOf: CGSize(width: 5000, height: 30))
     var leftBorder = SKShapeNode(rectOf: CGSize(width: 5000, height: 30))
     var rightBorder = SKShapeNode(rectOf: CGSize(width: 5000, height: 30))
     
-    let startingPlatform = SKShapeNode(rectOf: CGSize(width: 100, height: 30))
+    var startingPlatform: SKShapeNode!
+    var finalPlatform: SKShapeNode!
     
     var scoreLabel: SKLabelNode!
-    
-    
     
     func destroyNode(node: SKNode) {
         let explosionEmitterNode = SKEmitterNode(fileNamed:"Explosion")!
@@ -42,8 +42,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func createPlatforms() {
         
+        let platformHeight = 25
+        
+        startingPlatform = SKShapeNode(rectOf: CGSize(width: 100, height: 25))
         startingPlatform.fillColor = .systemMint
-        startingPlatform.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 100, height: 30))
+        startingPlatform.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 100, height: platformHeight))
         startingPlatform.physicsBody?.affectedByGravity = false
         startingPlatform.physicsBody?.isDynamic = false
         startingPlatform.name = "ground"
@@ -58,7 +61,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         for i in 0...4 {
             let width = Int.random(in: 150...200)
-            let height = 30
+            let height = platformHeight
             let platform = SKShapeNode(rectOf: CGSize(width: width, height: height))
             
             platform.fillColor = .green
@@ -77,9 +80,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             addChild(platform)
         }
         
-        let finalPlatform = SKShapeNode(rectOf: CGSize(width: 100, height: 30))
+        finalPlatform = SKShapeNode(rectOf: CGSize(width: 100, height: platformHeight))
         finalPlatform.fillColor = .systemMint
-        finalPlatform.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 100, height: 30))
+        finalPlatform.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 100, height: platformHeight))
         finalPlatform.physicsBody?.affectedByGravity = false
         finalPlatform.physicsBody?.isDynamic = false
         finalPlatform.name = "final"
