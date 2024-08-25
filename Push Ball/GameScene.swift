@@ -59,30 +59,46 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let level = Globals.level
         
-        for i in 0...4 {
-            let width = 125
-            let height = platformHeight
-            let platform = SKShapeNode(rectOf: CGSize(width: width, height: height))
-            
-            platform.fillColor = .green
-            platform.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: width, height: height))
-            platform.physicsBody?.affectedByGravity = false
-            platform.physicsBody?.isDynamic = false
-            platform.name = "ground"
-            
-            if (Globals.level < Globals.levelPlatformPositions.count) && (i < Globals.levelPlatformPositions[level].count) {
+        let width = 125
+        let height = platformHeight
+        
+        if (Globals.level < Globals.levelPlatformPositions.count) {
+            for i in 0...(Globals.levelPlatformPositions[level].count - 1) {
+                print(i)
+                
+                let platform = SKShapeNode(rectOf: CGSize(width: width, height: height))
+                
+                platform.fillColor = .green
+                platform.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: width, height: height))
+                platform.physicsBody?.affectedByGravity = false
+                platform.physicsBody?.isDynamic = false
+                platform.name = "ground"
+                
                 let currentLevel = Globals.levelPlatformPositions[level]
                 platform.position = .init(x: currentLevel[i][0], y: currentLevel[i][1])
-            } else {
+                
+                addChild(platform)
+            }
+        } else {
+            for i in 0...4 {
+                let platform = SKShapeNode(rectOf: CGSize(width: width, height: height))
+                
+                platform.fillColor = .green
+                platform.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: width, height: height))
+                platform.physicsBody?.affectedByGravity = false
+                platform.physicsBody?.isDynamic = false
+                platform.name = "ground"
+                
                 if i == 0 {
                     platform.position = .init(x: Int.random(in: 175 ... 310), y: Int.random(in: 85...(660-height)))
                 } else {
                     platform.position = .init(x: Int.random(in: 125 ... (912-width)), y: Int.random(in: 85...(660-height)))
                 }
+                
+                addChild(platform)
             }
-            
-            addChild(platform)
         }
+        
         
         finalPlatform = SKShapeNode(rectOf: CGSize(width: 100, height: platformHeight))
         finalPlatform.fillColor = .systemMint
