@@ -80,6 +80,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 addChild(platform)
             }
         } else {
+            var platformPos = [[Int]]()
+            
             for i in 0...4 {
                 let platform = SKShapeNode(rectOf: CGSize(width: width, height: height))
                 
@@ -90,9 +92,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 platform.name = "ground"
                 
                 if i == 0 {
-                    platform.position = .init(x: Int.random(in: 175 ... 310), y: Int.random(in: 85...(660-height)))
+                    platformPos.append([Int.random(in: 175 ... 310), Int.random(in: 85...(660-height))])
+                                        
+                    platform.position = .init(x: platformPos[i][0], y: platformPos[i][1])
                 } else {
-                    platform.position = .init(x: Int.random(in: 125 ... (912-width)), y: Int.random(in: 85...(660-height)))
+                    
+                    platformPos.append([Int.random(in: 125 ... (912-width)), Int.random(in: 85...(660-height))])
+                    
+                    platform.position = .init(x: platformPos[i][0], y: platformPos[i][1])
                 }
                 
                 addChild(platform)
@@ -193,8 +200,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func collisionBetween(marble: SKNode, object: SKNode) {
         if object.name == "ground" {
-            marble.physicsBody?.applyImpulse(CGVector(dx: 800, dy: 0))
+            marble.physicsBody?.applyImpulse(CGVector(dx: 850, dy: 0))
         } else if object.name == "player" {
+            
+            object.physicsBody?.applyImpulse(CGVector(dx: 150, dy: 5))
+            
             destroyNode(node: marble)
         } else if object.name == "border" || object.name == "final"{
             marble.removeFromParent()
