@@ -12,7 +12,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let rectangleHeight = 20
     
-    let player = SKShapeNode(circleOfRadius: 20)
+    let player = SKSpriteNode(imageNamed: "smiley")
     
     var bottomBorder = SKShapeNode(rectOf: CGSize(width: 5000, height: 30))
     var topBorder = SKShapeNode(rectOf: CGSize(width: 5000, height: 30))
@@ -135,7 +135,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         createPlatforms()
         
-        player.fillColor = .red
+        //player.fillColor = .red
+        player.size = CGSize(width: 40, height: 40)
         player.physicsBody = SKPhysicsBody(circleOfRadius: 20)
         player.physicsBody?.affectedByGravity = true
         player.physicsBody?.isDynamic = true
@@ -162,7 +163,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         createPlatforms()
         
-        player.fillColor = .red
+        //player.fillColor = .red
+        player.size = CGSize(width: 40, height: 40)
         player.physicsBody = SKPhysicsBody(circleOfRadius: 20)
         player.physicsBody?.affectedByGravity = true
         player.physicsBody?.isDynamic = true
@@ -184,6 +186,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if node.name == "player" {
                     print("touched player")
                     touchingPlayer = true
+                    player.addGlow(radius: 20)
+                    
                     scene?.physicsWorld.speed = 0
                 }
             }
@@ -209,6 +213,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 player.physicsBody!.velocity = velocity
                 
                 touchingPlayer = false
+                player.removeAllChildren()
                 
             } else {
                 let marble = SKShapeNode(circleOfRadius: 15)
