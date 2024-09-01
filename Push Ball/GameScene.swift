@@ -12,7 +12,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let rectangleHeight = 20
     
-    let player = SKSpriteNode(imageNamed: "smiley")
+    let player = SKSpriteNode(imageNamed: "smiley_pink")
     
     var bottomBorder = SKShapeNode(rectOf: CGSize(width: 5000, height: 30))
     var topBorder = SKShapeNode(rectOf: CGSize(width: 5000, height: 30))
@@ -135,7 +135,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         createPlatforms()
         
-        //player.fillColor = .red
         player.size = CGSize(width: 40, height: 40)
         player.physicsBody = SKPhysicsBody(circleOfRadius: 20)
         player.physicsBody?.affectedByGravity = true
@@ -163,7 +162,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         createPlatforms()
         
-        //player.fillColor = .red
         player.size = CGSize(width: 40, height: 40)
         player.physicsBody = SKPhysicsBody(circleOfRadius: 20)
         player.physicsBody?.affectedByGravity = true
@@ -186,7 +184,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if node.name == "player" {
                     print("touched player")
                     touchingPlayer = true
-                    player.addGlow(radius: 20)
+                    player.addGlow(radius: 25)
                     
                     scene?.physicsWorld.speed = 0
                 }
@@ -195,25 +193,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //print(touch.location(in: self).x, touch.location(in:self).y)
         }
     }
-//    
-//    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-//       
-//    }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             if touchingPlayer {
                 scene?.physicsWorld.speed = 1.0
                 
-                var touchPoint = touch.location(in: self)
+                let touchPoint = touch.location(in: self)
                 
-                let dt:CGFloat = 0.5
+                let dt:CGFloat = 0.4
                 let distance = CGVector(dx: touchPoint.x-player.position.x, dy: touchPoint.y-player.position.y)
                 let velocity = CGVector(dx: distance.dx/dt, dy: distance.dy/dt)
                 player.physicsBody!.velocity = velocity
                 
                 touchingPlayer = false
-                player.removeAllChildren()
+                player.removeGlow()
                 
             } else {
                 let marble = SKShapeNode(circleOfRadius: 15)
