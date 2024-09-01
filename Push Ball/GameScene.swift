@@ -24,6 +24,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var scoreLabel: SKLabelNode!
     
+    var touchingPlayer: Bool = false
+    
     func destroyNode(node: SKNode) {
         let explosionEmitterNode = SKEmitterNode(fileNamed:"Explosion")!
         explosionEmitterNode.position = node.position
@@ -79,10 +81,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 addChild(platform)
             }
-        } else {
+        } else { // max first jump is 350 x
             var platformPos = [[Int]]()
             
-            for i in 0...4 {
+            for i in 0...Int.random(in: 3...4) {
                 let platform = SKShapeNode(rectOf: CGSize(width: width, height: height))
                 
                 platform.fillColor = .green
@@ -91,9 +93,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 platform.physicsBody?.isDynamic = false
                 platform.name = "ground"
                 
+                
                 if i == 0 {
-                    platformPos.append([Int.random(in: 175 ... 310), Int.random(in: 85...(660-height))])
-                                        
+                    platformPos.append([75+Int.random(in: 0 ... 350), Int.random(in: 300...(660-height))])
+                    
+                    platform.position = .init(x: platformPos[i][0], y: platformPos[i][1])
+                } else if i == 4 {
+                    platformPos.append([912-Int.random(in: 100 ... (350-width)), Int.random(in: 90...(200-height))])
+                    
                     platform.position = .init(x: platformPos[i][0], y: platformPos[i][1])
                 } else {
                     
@@ -170,7 +177,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
-            print(touch.location(in: self).x, touch.location(in:self).y)
+            
+            let location = touch.location(in: self)
+            let touchedNode = self.nodes(at: location)
+            for node in touchedNode {
+                if node.name == "player" {
+                    print("touched player")
+                    touchingPlayer = true
+                    scene?.physicsWorld.speed = 0
+                }
+            }
+            
+            //print(touch.location(in: self).x, touch.location(in:self).y)
         }
     }
 //    
@@ -180,21 +198,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
-            let marble = SKShapeNode(circleOfRadius: 15)
-            marble.fillColor = .blue
-            
-            marble.physicsBody = SKPhysicsBody(circleOfRadius: 15)
-            marble.physicsBody?.affectedByGravity = true
-            marble.physicsBody?.isDynamic = true
-            marble.physicsBody?.mass = 7
-            marble.position = touch.location(in: self)
-            marble.name = "marble"
-            
-            marble.physicsBody!.contactTestBitMask = marble.physicsBody!.collisionBitMask
-            
-            self.addChild(marble)
-            
-            marble.physicsBody?.applyImpulse(CGVector(dx: 0, dy: -200))
+            if touchingPlayer {
+                scene?.physicsWorld.speed = 1.0
+                
+                var touchPoint = touch.location(in: self)
+                
+                let dt:CGFloat = 0.5
+                let distance = CGVector(dx: touchPoint.x-player.position.x, dy: touchPoint.y-player.position.y)
+                let velocity = CGVector(dx: distance.dx/dt, dy: distance.dy/dt)
+                player.physicsBody!.velocity = velocity
+                
+                touchingPlayer = false
+                
+            } else {
+                let marble = SKShapeNode(circleOfRadius: 15)
+                marble.fillColor = .blue
+                
+                marble.physicsBody = SKPhysicsBody(circleOfRadius: 15)
+                marble.physicsBody?.affectedByGravity = true
+                marble.physicsBody?.isDynamic = true
+                marble.physicsBody?.mass = 7
+                marble.position = touch.location(in: self)
+                marble.name = "marble"
+                
+                marble.physicsBody!.contactTestBitMask = marble.physicsBody!.collisionBitMask
+                
+                self.addChild(marble)
+                
+                marble.physicsBody?.applyImpulse(CGVector(dx: 0, dy: -200))
+            }
         }
     }
     
@@ -203,7 +235,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             marble.physicsBody?.applyImpulse(CGVector(dx: 850, dy: 0))
         } else if object.name == "player" {
             
-            object.physicsBody?.applyImpulse(CGVector(dx: 150, dy: 5))
+            object.physicsBody?.applyImpulse(CGVector(dx: 125, dy: 0))
             
             destroyNode(node: marble)
         } else if object.name == "border" || object.name == "final"{
