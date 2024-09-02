@@ -13,16 +13,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let rectangleHeight = 20
     
     let player = SKSpriteNode(imageNamed: "smiley_pink")
-    
-    var bottomBorder = SKShapeNode(rectOf: CGSize(width: 5000, height: 30))
-    var topBorder = SKShapeNode(rectOf: CGSize(width: 5000, height: 30))
-    var leftBorder = SKShapeNode(rectOf: CGSize(width: 5000, height: 30))
-    var rightBorder = SKShapeNode(rectOf: CGSize(width: 5000, height: 30))
-    
+
     var startingPlatform: SKShapeNode!
     var finalPlatform: SKShapeNode!
     
     var scoreLabel: SKLabelNode!
+    
+    var throwsLabel: SKLabelNode!
+    
+    var throwsRound: Int = 0
+    
+    var maxThrows: Int = 2
     
     var touchingPlayer: Bool = false
     
@@ -59,62 +60,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.position.x = startingPlatform.position.x
         player.position.y = startingPlatform.position.y + 50
         
-        let level = Globals.level
-        
-        let width = 125
+        let width = Int.random(in: 50...175)
         let height = platformHeight
         
-        if (Globals.level < Globals.levelPlatformPositions.count) {
-            for i in 0...(Globals.levelPlatformPositions[level].count - 1) {
-                print(i)
-                
-                let platform = SKShapeNode(rectOf: CGSize(width: width, height: height))
-                
-                platform.fillColor = .green
-                platform.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: width, height: height))
-                platform.physicsBody?.affectedByGravity = false
-                platform.physicsBody?.isDynamic = false
-                platform.name = "ground"
-                
-                let currentLevel = Globals.levelPlatformPositions[level]
-                platform.position = .init(x: currentLevel[i][0], y: currentLevel[i][1])
-                
-                addChild(platform)
-            }
-        } else {
-            var platformPos = [[Int]]()
-            
-            for i in 0...Int.random(in: 3...4) {
-                let platform = SKShapeNode(rectOf: CGSize(width: width, height: height))
-                
-                platform.fillColor = .green
-                platform.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: width, height: height))
-                platform.physicsBody?.affectedByGravity = false
-                platform.physicsBody?.isDynamic = false
-                platform.name = "ground"
-                
-                // i = 0
-                
-//                platformPos.append([75+Int.random(in: 0 ... 350), Int.random(in: 300...(660-height))])
-//                
-//                platform.position = .init(x: platformPos[i][0], y: platformPos[i][1])
-                
-                
-                if i == 4 {
-                    platformPos.append([912-Int.random(in: 100 ... (350-width)), Int.random(in: 90...(200-height))])
-                    
-                    platform.position = .init(x: platformPos[i][0], y: platformPos[i][1])
-                } else {
-                    
-                    platformPos.append([Int.random(in: 125 ... (912-width)), Int.random(in: 85...(660-height))])
-                    
-                    platform.position = .init(x: platformPos[i][0], y: platformPos[i][1])
-                }
-                
-                addChild(platform)
-            }
-        }
+        var platformPos = [[Int]]()
+        let numPlatforms = Int.random(in: 3...4)
         
+        for i in 0 ... numPlatforms {
+            let platform = SKShapeNode(rectOf: CGSize(width: width, height: height))
+            
+            platform.fillColor = .green
+            platform.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: width, height: height))
+            platform.physicsBody?.affectedByGravity = false
+            platform.physicsBody?.isDynamic = false
+            platform.name = "ground"
+            
+            platformPos.append([Int.random(in: 125 ... (912-width)), Int.random(in: 85...(660-height))])
+            platform.position = .init(x: platformPos[i][0], y: platformPos[i][1])
+            
+            addChild(platform)
+        }
         
         finalPlatform = SKShapeNode(rectOf: CGSize(width: 100, height: platformHeight))
         finalPlatform.fillColor = .systemMint
@@ -129,8 +94,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func resetLevel() {
         
+        throwsRound = 0
+        maxThrows = Int.random(in: 1...3)
+        
         for child in self.children {
-            if child.name != "score" {
+            if child.name != "score" && child.name != "throws" {
                 child.removeFromParent()
             }
         }
@@ -162,18 +130,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel.position = CGPoint(x:20, y:740)
         addChild(scoreLabel)
         
-        createPlatforms()
+        throwsLabel = SKLabelNode(fontNamed: "Annai MN")
+        throwsLabel.fontSize = 25
+        throwsLabel.name = "throws"
+        throwsLabel.horizontalAlignmentMode = .left
+        throwsLabel.position = CGPoint(x:980, y:740)
+        addChild(throwsLabel)
         
-        player.size = CGSize(width: 40, height: 40)
-        player.physicsBody = SKPhysicsBody(circleOfRadius: 20)
-        player.physicsBody?.affectedByGravity = true
-        player.physicsBody?.isDynamic = true
-        player.physicsBody?.mass = 1
-        player.name = "player"
-        
-        player.physicsBody!.contactTestBitMask = player.physicsBody!.collisionBitMask
-        
-        addChild(player)
+        resetLevel()
     }
     
     
@@ -183,7 +147,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let location = touch.location(in: self)
             let touchedNode = self.nodes(at: location)
             for node in touchedNode {
-                if node.name == "player" {
+                if node.name == "player" && throwsRound != maxThrows {
                     touchingPlayer = true
                     player.addGlow(radius: 25)
                     
@@ -198,6 +162,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             if touchingPlayer {
+                
+                throwsRound += 1
+                
                 scene?.physicsWorld.speed = 1.0
                 
                 let touchPoint = touch.location(in: self)
@@ -290,6 +257,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.run(action)
         player.physicsBody?.isDynamic = true
         player.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+        
+        throwsRound = 0
     }
     
     func keepNodesInBounds() {
@@ -329,5 +298,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
         keepNodesInBounds()
+        
+        throwsLabel.text = "\(throwsRound)/\(maxThrows)"
+        
+        if throwsRound == maxThrows {
+            throwsLabel.fontColor = .red
+        } else {
+            throwsLabel.fontColor = .white
+        }
     }
 }
