@@ -81,7 +81,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 addChild(platform)
             }
-        } else { // max first jump is 350 x
+        } else {
             var platformPos = [[Int]]()
             
             for i in 0...Int.random(in: 3...4) {
@@ -93,12 +93,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 platform.physicsBody?.isDynamic = false
                 platform.name = "ground"
                 
+                // i = 0
                 
-                if i == 0 {
-                    platformPos.append([75+Int.random(in: 0 ... 350), Int.random(in: 300...(660-height))])
-                    
-                    platform.position = .init(x: platformPos[i][0], y: platformPos[i][1])
-                } else if i == 4 {
+//                platformPos.append([75+Int.random(in: 0 ... 350), Int.random(in: 300...(660-height))])
+//                
+//                platform.position = .init(x: platformPos[i][0], y: platformPos[i][1])
+                
+                
+                if i == 4 {
                     platformPos.append([912-Int.random(in: 100 ... (350-width)), Int.random(in: 90...(200-height))])
                     
                     platform.position = .init(x: platformPos[i][0], y: platformPos[i][1])
@@ -182,7 +184,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let touchedNode = self.nodes(at: location)
             for node in touchedNode {
                 if node.name == "player" {
-                    print("touched player")
                     touchingPlayer = true
                     player.addGlow(radius: 25)
                     
@@ -202,8 +203,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let touchPoint = touch.location(in: self)
                 
                 let dt:CGFloat = 0.4
+                
                 let distance = CGVector(dx: touchPoint.x-player.position.x, dy: touchPoint.y-player.position.y)
                 let velocity = CGVector(dx: distance.dx/dt, dy: distance.dy/dt)
+                
                 player.physicsBody!.velocity = velocity
                 
                 touchingPlayer = false

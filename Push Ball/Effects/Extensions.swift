@@ -29,6 +29,7 @@ extension SKSpriteNode {
         
         effectNode.addChild(effect)
         effectNode.filter = CIFilter(name: "CIGaussianBlur", parameters: ["inputRadius":radius])
+        effect.removeAllActions()
         
         effect.run(fadeIn)
     }
@@ -37,8 +38,10 @@ extension SKSpriteNode {
         
         let fadeOut = SKAction.fadeAlpha(to: 0.0, duration: 1.5)
         
-        self.children[0].run(fadeOut){
-          self.removeAllChildren()
+        if !self.children.isEmpty {
+            self.children[0].run(fadeOut){
+              self.removeAllChildren()
+            }
         }
     }
 }
