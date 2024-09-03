@@ -60,7 +60,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.position.x = startingPlatform.position.x
         player.position.y = startingPlatform.position.y + 50
         
-        let width = Int.random(in: 50...175)
+        let width = Int.random(in: 75...175)
         let height = platformHeight
         
         var platformPos = [[Int]]()
@@ -69,13 +69,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for i in 0 ... numPlatforms {
             let platform = SKShapeNode(rectOf: CGSize(width: width, height: height))
             
+            var x = Int.random(in: 125 ... (912-width))
+            var y = Int.random(in: 85...(660-height))
+            
+            for i in platformPos {
+                if (max(i[0]-x, x-i[0]) <= 75) && (max(i[1], y) <= 25) {
+                    print(i[0], i[1])
+                    print(x, y)
+                    print("close platform")
+                }
+            }
+            
             platform.fillColor = .green
             platform.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: width, height: height))
             platform.physicsBody?.affectedByGravity = false
             platform.physicsBody?.isDynamic = false
             platform.name = "ground"
             
-            platformPos.append([Int.random(in: 125 ... (912-width)), Int.random(in: 85...(660-height))])
+            platformPos.append([x, y])
             platform.position = .init(x: platformPos[i][0], y: platformPos[i][1])
             
             addChild(platform)
@@ -155,7 +166,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
             
-            //print(touch.location(in: self).x, touch.location(in:self).y)
+            print(touch.location(in: self).x, touch.location(in:self).y)
         }
     }
     
