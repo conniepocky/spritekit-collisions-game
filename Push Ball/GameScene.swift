@@ -53,14 +53,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         startingPlatform.physicsBody?.affectedByGravity = false
         startingPlatform.physicsBody?.isDynamic = false
         startingPlatform.name = "ground"
-        startingPlatform.position = .init(x: 75, y: 640)
+        startingPlatform.position = .init(x: 75, y: 645)
         
         addChild(startingPlatform)
         
         player.position.x = startingPlatform.position.x
         player.position.y = startingPlatform.position.y + 50
         
-        let width = Int.random(in: 75...175)
+        var width = 100
         let height = platformHeight
         
         var platformPos = [[Int]]()
@@ -69,14 +69,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for i in 0 ... numPlatforms {
             let platform = SKShapeNode(rectOf: CGSize(width: width, height: height))
             
-            var x = Int.random(in: 125 ... (912-width))
-            var y = Int.random(in: 85...(660-height))
+            var x = Int.random(in: 75 ... (912-width))
+            var y = Int.random(in: 85...(640-height))
+            width = Int.random(in: 75...175)
             
             for i in platformPos {
-                if (max(i[0]-x, x-i[0]) <= 75) && (max(i[1], y) <= 25) {
+                if (max(i[0]-x, x-i[0]) <= 75) && (max(i[1]-y, y-i[1]) <= 40) {
                     print(i[0], i[1])
                     print(x, y)
                     print("close platform")
+                    
+                    x = Int.random(in: 125 ... (912-width))
+                    y = Int.random(in: 85...(660-height))
                 }
             }
             
@@ -215,7 +219,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             marble.physicsBody?.applyImpulse(CGVector(dx: 850, dy: 0))
         } else if object.name == "player" {
             
-            object.physicsBody?.applyImpulse(CGVector(dx: 125, dy: 0))
+            object.physicsBody?.applyImpulse(CGVector(dx: 150, dy: 0))
             
             destroyNode(node: marble)
         } else if object.name == "border" || object.name == "final"{
