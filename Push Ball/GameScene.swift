@@ -21,6 +21,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var throwsLabel: SKLabelNode!
     
+    let helpButton = SKSpriteNode(imageNamed: "help")
+    
     var throwsRound: Int = 0
     
     var maxThrows: Int = 2
@@ -63,7 +65,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var width = 100
         let height = platformHeight
         
-        var platformPos = [[Int]]()
         let numPlatforms = Int.random(in: 3...4)
         
         for i in 0 ... numPlatforms {
@@ -73,14 +74,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             var y = Int.random(in: 85...(640-height))
             width = Int.random(in: 75...175)
             
-            for i in platformPos {
-                if (max(i[0]-x, x-i[0]) <= 75) && (max(i[1]-y, y-i[1]) <= 40) {
-                    print(i[0], i[1])
-                    print(x, y)
-                    print("close platform")
-                    
-                    x = Int.random(in: 125 ... (912-width))
-                    y = Int.random(in: 85...(660-height))
+            var closePlatform = true
+            
+            while closePlatform {
+                var touchedGround = false
+                for node in nodes(at: CGPoint(x: x, y: y)) {
+                    if node.name == "ground" {
+                        touchedGround = true
+                    }
+                }
+                
+                if !touchedGround {
+                    closePlatform = false
+                } else {
+                    x = Int.random(in: 75 ... (912-width))
+                    y = Int.random(in: 85...(640-height))
                 }
             }
             
@@ -90,8 +98,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             platform.physicsBody?.isDynamic = false
             platform.name = "ground"
             
-            platformPos.append([x, y])
-            platform.position = .init(x: platformPos[i][0], y: platformPos[i][1])
+            platform.position = .init(x: x, y: y)
             
             addChild(platform)
         }
@@ -113,7 +120,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         maxThrows = Int.random(in: 1...3)
         
         for child in self.children {
-            if child.name != "score" && child.name != "throws" {
+            if child.name != "score" && child.name != "throws" && child.name != "helpButton" {
                 child.removeFromParent()
             }
         }
@@ -149,8 +156,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         throwsLabel.fontSize = 25
         throwsLabel.name = "throws"
         throwsLabel.horizontalAlignmentMode = .left
-        throwsLabel.position = CGPoint(x:980, y:740)
+        throwsLabel.position = CGPoint(x:960, y:740)
         addChild(throwsLabel)
+        
+        helpButton.position = CGPoint(x: 980,y: 690)
+        helpButton.name = "helpButton"
+        helpButton.size = CGSize(width: 50, height: 50)
+        addChild(helpButton)
         
         resetLevel()
     }
