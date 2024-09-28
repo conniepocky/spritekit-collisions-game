@@ -29,6 +29,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var touchingPlayer: Bool = false
     
+    var helpView: Bool = false
+    
     func destroyNode(node: SKNode) {
         let explosionEmitterNode = SKEmitterNode(fileNamed:"Explosion")!
         explosionEmitterNode.position = node.position
@@ -67,7 +69,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let numPlatforms = Int.random(in: 3...4)
         
-        for i in 0 ... numPlatforms {
+        for _ in 0 ... numPlatforms {
             let platform = SKShapeNode(rectOf: CGSize(width: width, height: height))
             
             var x = Int.random(in: 75 ... (912-width))
@@ -167,12 +169,69 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         resetLevel()
     }
     
+    func showHelp() {
+//        
+//        var helpText = SKLabelNode()
+//        
+//        helpText = SKLabelNode(fontNamed: "Annai MN")
+//        helpText.text = "help pls"
+//        helpText.fontSize = 100
+//        helpText.position = CGPoint(x: 0, y: 0)
+//        
+//        let blurEffect = UIBlurEffect(style: .dark) //or other style
+//
+//        //1
+//        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+//        blurEffectView.effect = blurEffect
+//
+//        //frame
+//        blurEffectView.frame = (view?.bounds)!
+//        
+//        //use
+//        view?.addSubview(blurEffectView)
+//        
+//        helpText.zPosition = 10
+//        blurEffectView.addChild(helpText)
+//        
+        // Blur Effect
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = view!.bounds
+        view!.addSubview(blurEffectView)
+
+        // Vibrancy Effect
+        let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
+        let vibrancyEffectView = UIVisualEffectView(effect: vibrancyEffect)
+        vibrancyEffectView.frame = view!.bounds
+
+        // Label for vibrant text
+        let vibrantLabel = UILabel()
+        vibrantLabel.text = "Help"
+        vibrantLabel.font = UIFont.systemFont(ofSize: 72.0)
+        vibrantLabel.sizeToFit()
+        vibrantLabel.center = view!.center
+
+        // Add label to the vibrancy view
+        vibrancyEffectView.contentView.addSubview(vibrantLabel)
+
+        // Add the vibrancy view to the blur view
+        blurEffectView.contentView.addSubview(vibrancyEffectView)
+        
+        scene?.physicsWorld.speed = 0
+    }
+    
+    func closeHelp() {
+        scene?.physicsWorld.speed = 1.0
+        
+        view!.removeAllSubviews()
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             
             let location = touch.location(in: self)
             let touchedNode = self.nodes(at: location)
+            
             for node in touchedNode {
                 if node.name == "player" && throwsRound != maxThrows {
                     touchingPlayer = true
@@ -188,8 +247,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
-            if touchingPlayer {
-                
+            
+            let location = touch.location(in: self)
+            let touchedNode = self.nodes(at: location)
+            
+            for node in touchedNode {
+                if node.name == "helpButton" && helpView != true {
+                    helpView = true
+                    showHelp()
+                    return
+                }
+            }
+            
+            if helpView {
+                helpView = false
+                closeHelp()
+            } else if touchingPlayer {
                 throwsRound += 1
                 
                 scene?.physicsWorld.speed = 1.0
@@ -205,7 +278,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 touchingPlayer = false
                 player.removeGlow()
-                
             } else {
                 let marble = SKShapeNode(circleOfRadius: 15)
                 marble.fillColor = .blue
