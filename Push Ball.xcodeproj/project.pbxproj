@@ -20,7 +20,7 @@
 		BC9E7BA32C6CC7BF00178CE2 /* StartScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = BC9E7BA22C6CC7BF00178CE2 /* StartScene.sks */; };
 		BC9E7BA92C710DE700178CE2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC9E7BA72C710DE700178CE2 /* Assets.xcassets */; };
 		BC9E7BB22C84748C00178CE2 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9E7BB12C84748C00178CE2 /* Extensions.swift */; };
-		BC9E7BB52C84762D00178CE2 /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = BC9E7BB42C84762D00178CE2 /* Explosion.sks */; };
+		BCD7DA652CB12861006C491A /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = BCD7DA642CB12861006C491A /* Explosion.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,7 +39,7 @@
 		BC9E7BA72C710DE700178CE2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BC9E7BB12C84748C00178CE2 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		BC9E7BB32C84749600178CE2 /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explosion.sks; sourceTree = "<group>"; };
-		BC9E7BB42C84762D00178CE2 /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Explosion.sks; path = ../../../../.Trash/Explosion.sks; sourceTree = "<group>"; };
+		BCD7DA642CB12861006C491A /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Explosion.sks; path = ../../../../Downloads/Explosion.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,7 +85,7 @@
 				BC5739FB2C67A5550038E707 /* LaunchScreen.storyboard */,
 				BC9E7B9C2C6B616300178CE2 /* Globals.swift */,
 				BC9E7BA02C6CC75400178CE2 /* StartScene.swift */,
-				BC9E7BB42C84762D00178CE2 /* Explosion.sks */,
+				BCD7DA642CB12861006C491A /* Explosion.sks */,
 				BC9E7BB32C84749600178CE2 /* Explosion.sks */,
 			);
 			path = "Push Ball";
@@ -162,7 +162,7 @@
 				BC5739FA2C67A5550038E707 /* Assets.xcassets in Resources */,
 				BC9E7BA32C6CC7BF00178CE2 /* StartScene.sks in Resources */,
 				BC5739F12C67A5540038E707 /* Actions.sks in Resources */,
-				BC9E7BB52C84762D00178CE2 /* Explosion.sks in Resources */,
+				BCD7DA652CB12861006C491A /* Explosion.sks in Resources */,
 				BC9E7BA92C710DE700178CE2 /* Assets.xcassets in Resources */,
 				BC5739FD2C67A5550038E707 /* Base in Resources */,
 			);

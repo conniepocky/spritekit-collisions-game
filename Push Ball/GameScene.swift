@@ -170,49 +170,46 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func showHelp() {
-//        
-//        var helpText = SKLabelNode()
-//        
-//        helpText = SKLabelNode(fontNamed: "Annai MN")
-//        helpText.text = "help pls"
-//        helpText.fontSize = 100
-//        helpText.position = CGPoint(x: 0, y: 0)
-//        
-//        let blurEffect = UIBlurEffect(style: .dark) //or other style
-//
-//        //1
-//        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-//        blurEffectView.effect = blurEffect
-//
-//        //frame
-//        blurEffectView.frame = (view?.bounds)!
-//        
-//        //use
-//        view?.addSubview(blurEffectView)
-//        
-//        helpText.zPosition = 10
-//        blurEffectView.addChild(helpText)
-//        
         // Blur Effect
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = view!.bounds
         view!.addSubview(blurEffectView)
 
-        // Vibrancy Effect
         let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
         let vibrancyEffectView = UIVisualEffectView(effect: vibrancyEffect)
         vibrancyEffectView.frame = view!.bounds
 
         // Label for vibrant text
-        let vibrantLabel = UILabel()
-        vibrantLabel.text = "Help"
-        vibrantLabel.font = UIFont.systemFont(ofSize: 72.0)
-        vibrantLabel.sizeToFit()
-        vibrantLabel.center = view!.center
-
+        let vibrantTitleLabel = UILabel()
+        vibrantTitleLabel.text = "Help"
+        vibrantTitleLabel.font = UIFont.systemFont(ofSize: 72.0)
+        vibrantTitleLabel.sizeToFit()
+        vibrantTitleLabel.layer.position = CGPoint(x:590, y:43)
+        
+        let infoLabel1 = UILabel()
+        infoLabel1.text = "Press and hold on the player ball to throw it."
+        infoLabel1.font = UIFont.systemFont(ofSize: 35)
+        infoLabel1.sizeToFit()
+        infoLabel1.layer.position = CGPoint(x: 590, y: 143)
+        
+        let infoLabel2 = UILabel()
+        infoLabel2.text = "Tap anywhere to release a marble that will push the player ball."
+        infoLabel2.font = UIFont.systemFont(ofSize: 35)
+        infoLabel2.sizeToFit()
+        infoLabel2.layer.position = CGPoint(x: 590, y: 243)
+        
+        let infoLabel3 = UILabel()
+        infoLabel3.text = "The objective is to reach the platform in the bottom right."
+        infoLabel3.font = UIFont.systemFont(ofSize: 35)
+        infoLabel3.sizeToFit()
+        infoLabel3.layer.position = CGPoint(x: 590, y: 343)
+        
         // Add label to the vibrancy view
-        vibrancyEffectView.contentView.addSubview(vibrantLabel)
+        vibrancyEffectView.contentView.addSubview(vibrantTitleLabel)
+        vibrancyEffectView.contentView.addSubview(infoLabel1)
+        vibrancyEffectView.contentView.addSubview(infoLabel2)
+        vibrancyEffectView.contentView.addSubview(infoLabel3)
 
         // Add the vibrancy view to the blur view
         blurEffectView.contentView.addSubview(vibrancyEffectView)
